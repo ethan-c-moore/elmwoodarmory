@@ -1,0 +1,175 @@
+:host {
+  /* Anchor at ~20% from the top-left of the viewport */
+  position: fixed;
+  top: 20vh;
+  left: 0;
+  z-index: 1000;
+  /* We'll use transforms for the slide; keep interactions predictable */
+  pointer-events: none; /* re-enable on children */
+  --panel-width: clamp(300px, 85vw, 420px);
+  --tab-visible: 100px;           /* how much of the tab shows when closed */
+  --bg: color-mix(in oklab, var(--quaternary-color) 92%, black 8%);
+  --chip: color-mix(in oklab, var(--quaternary-color) 85%, black 12%);
+  --border: rgba(0,0,0,.14);
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+/* Root wrapper, gives a real box for DevTools */
+.events-root {
+  position: relative;
+  inline-size: var(--panel-width);
+  pointer-events: none;
+}
+
+/* The rectangle tab that’s visible when closed */
+.events-tab {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  inline-size: var(--tab-visible);
+  block-size: 44px;
+  border-radius: 0 10px 10px 0;
+  background: var(--secondary-color);
+  color: var(--primary-text);
+  border: 1px solid var(--border);
+  border-left: none;
+  box-shadow: var(--shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+.events-tab:hover { filter: brightness(1.05); }
+.events-tab:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 2px; }
+
+/* Sliding panel */
+.events-panel {
+  pointer-events: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 14px 14px 0;
+  box-shadow: var(--shadow);
+
+  inline-size: var(--panel-width);
+  max-block-size: min(70vh, calc(100dvh - 2rem));
+  overflow: auto;
+
+  /* Initially tucked off-screen except the tab width */
+  /*transform: translateX(calc(-100% + var(--tab-visible)));*/
+  transform: translateX(calc(-100%));
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+
+/* When open, slide fully into view and keep the tab visible at the top edge */
+:host.open .events-panel {
+  transform: translateX(0);
+}
+
+/* Ensure the tab stays on top and clickable */
+.events-tab { z-index: 2; }
+
+/* Panel header */
+.panel-header {
+  position: sticky;
+  top: 0;
+  background: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: .5rem;
+  padding: .6rem .75rem;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  border-radius: 0 14px 0 0;
+}
+.panel-close {
+  border: 1px solid var(--border);
+  background: var(--chip);
+  color: inherit;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* List styles */
+.event-list {
+  list-style: none;
+  margin: 0;
+  padding: .6rem;
+  display: grid;
+  gap: .5rem;
+}
+
+.event-item {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--quaternary-color) 96%, black 4%);
+  padding: .6rem .65rem;
+}
+
+.event-lines {
+  display: grid;
+  gap: .25rem;
+}
+.event-title {
+  font-weight: 700;
+  line-height: 1.2;
+}
+.event-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.event-title a:hover { border-bottom-color: currentColor; }
+
+.event-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .9rem;
+  opacity: .9;
+}
+.event-meta .dot { opacity: .6; }
+
+.event-desc {
+  font-size: .9rem;
+  line-height: 1.35;
+  margin-top: .15rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* short summary */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-actions {
+  margin-top: .35rem;
+}
+.btn {
+  display: inline-block;
+  font-size: .9rem;
+  padding: .25rem .55rem;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 999px;
+  background: var(--chip);
+  color: inherit;
+  text-decoration: none;
+}
+.btn:hover { filter: brightness(1.05); }
+
+/* Small screens: make the tab a hair taller */
+@media (max-width: 480px) {
+  :host { --tab-visible: 150px; }
+  .events-tab { block-size: 48px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .events-panel { transition: none; }
+  .events-tab { transition: none; }
+}

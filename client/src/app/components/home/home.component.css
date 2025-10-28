@@ -1,0 +1,96 @@
+.home_container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--quaternary-color);
+  flex-direction: column;
+}
+
+.home_content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.home_company-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0;
+  background-image: url("/assets/img/gallery/tooled_boat_and_serpent.jpg");
+  background-position: center;
+  background-size: 120%;
+  background-repeat: no-repeat;
+}
+
+.home_company-info-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--primary-text);
+  background-image: linear-gradient(to left, transparent 1%, var(--quaternary-color) 10%, var(--quaternary-color) 90%, transparent 99%);
+  padding: 0 60px 20px;
+}
+
+.company-info-custom-callout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 36px;
+  letter-spacing: 2px;
+  font-variant: small-caps;
+  margin: 0.5rem;
+  width: 100%;
+}
+
+.company-info-custom-callout::before,
+.company-info-custom-callout::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  margin: 0 1rem;
+  background-color: var(--primary-text);
+}
+
+.company-info-tagline {
+  font-size: 38px;
+  font-variant: small-caps;
+}
+
+.company-info-text.first {
+  font-size: 32px;
+  margin: 0.5rem 0;
+}
+
+.company-info-text {
+  font-size: 26px;
+}
+
+.home_testimonials-container {
+  background-color: var(--primary-color);
+  padding: 10px 0;
+}
+
+.home_testimonials-content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.home_testimonials-carousel-item {
+  color: var(--primary-text);
+}
+
+.home_testimonials-carousel-item > p {
+  text-align: center;
+}
+
+.home_testimonials-carousel-item > p:first-child {
+  font-size: 26px;
+}
+
+.home_testimonials-carousel-item > p:last-child {
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 5px;
+}

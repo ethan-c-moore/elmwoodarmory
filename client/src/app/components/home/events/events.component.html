@@ -1,0 +1,47 @@
+<section class="events-root" aria-label="Upcoming events">
+  <!-- The visible “little rectangle” when closed -->
+  <button
+    type="button"
+    class="events-tab"
+    (click)="toggle()"
+    [attr.aria-expanded]="isOpen"
+    [attr.aria-controls]="'events-panel'"
+    title="Toggle upcoming events"
+  >
+    Upcoming Events {{isOpen? '&larr;' : '&rarr;'}}
+  </button>
+
+  <!-- The sliding panel -->
+  <div id="events-panel" class="events-panel" role="region" aria-label="Upcoming events">
+    <header class="panel-header">
+      <button type="button" class="panel-close" (click)="toggle()" aria-label="Close events panel">✕</button>
+    </header>
+
+    <ng-container *ngIf="upcomingEvents.length; else none">
+      <ul class="event-list">
+        <li class="event-item" *ngFor="let e of upcomingEvents">
+          <div class="event-lines">
+            <div class="event-title">
+              <a [href]="e.link" target="_blank" rel="noopener noreferrer">{{ e.name }}</a>
+            </div>
+            <div class="event-meta">
+              <span class="event-date">{{ formatRange(e) }}</span>
+              <span class="dot">•</span>
+              <span class="event-place">{{ shortAddress(e.address) }}</span>
+            </div>
+            <div class="event-desc">
+              {{ e.description }}
+            </div>
+            <div class="event-actions">
+              <a class="btn" [href]="e.link" target="_blank" rel="noopener noreferrer">Details</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-template #none>
+      <div class="empty">No upcoming events.</div>
+    </ng-template>
+  </div>
+</section>

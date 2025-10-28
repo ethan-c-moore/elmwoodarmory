@@ -1,0 +1,37 @@
+.terms_container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--quaternary-color);
+}
+
+.terms_content {
+  flex-grow: 1;
+  width: 80%;
+  margin: 40px auto;
+  color: var(--primary-text);
+}
+
+h1, h2, h3 {
+  margin: 10px;
+}
+
+p {
+  margin: 15px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  font-size: 18px;
+}

@@ -1,0 +1,36 @@
+<div class="home_container">
+  <app-header></app-header>
+    <div class="home_content">
+
+      <div class="home_company-info">
+        <div class="home_company-info-content">
+          <span class="company-info-custom-callout">custom</span>
+          <span class="company-info-tagline">Tack, Armor, Accessories and More</span>
+          <span class="company-info-text first">Handmade in Stansbury Park, Utah.</span>
+          <span class="company-info-text">Our focus is client-driven custom work;</span>
+          <span class="company-info-text">from the simplest wallet to the most complex of armors,</span>
+          <span class="company-info-text">we want to help make your dream piece come to life!</span>
+        </div>
+      </div>
+
+      <app-gallery-preview></app-gallery-preview>
+
+      <div class="home_testimonials-container">
+        <div class="home_testimonials-content">
+          <div class="home_testimonials-carousel swiper">
+            <div class="home_testimonials-carousel-inner swiper-wrapper">
+              <div *ngFor="let testimonial of testimonials" class="home_testimonials-carousel-item swiper-slide">
+                <p>{{testimonial.testimonial}}</p>
+                <p> - {{testimonial.author}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <app-contact></app-contact>
+      <app-events></app-events>
+
+    </div>
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,48 @@
+<nav class="nav_container">
+  <div class="nav_content">
+    <a routerLink="/home" class="nav_company-name-logo-container">
+      <div class="nav_company-logo-container">
+        <img src="assets/ewa/liontr.png" alt="Elmwood Lion">
+      </div>
+      <div class="nav_company-name-container">
+        <h5>Elmwood</h5>
+        <h6>Armory</h6>
+      </div>
+    </a>
+
+    <div class="nav_link-container" *ngIf="router.url !== '/checkout'">
+      <div class="nav_link-content-wrapper">
+        <div class="nav_link-content">
+          <a routerLink="/home" class="nav_link" routerLinkActive="active"><span>Home</span></a>
+          <a routerLink="/gallery" class="nav_link" routerLinkActive="active"><span>Gallery</span></a>
+          <a routerLink="/shop" class="nav_link" routerLinkActive="active"><span>Shop</span></a>
+          <a routerLink="/about" class="nav_link" routerLinkActive="active"><span>About</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Icon -->
+    <div class="nav_cart-container" *ngIf="cartItems.length > 0 && router.url !== '/checkout'">
+      <button class="cart-trigger" type="button" (click)="toggleCartDropdown()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 902.86 902.86" class="cart-icon">
+          <g transform="scale(-1, 1) translate(-902.86, 0)">
+            <path d="M671.504,577.829l110.485-432.609H902.86v-68H729.174L703.128,179.2L0,178.697l74.753,399.129h596.751V577.829z       M685.766,247.188l-67.077,262.64H131.199L81.928,246.756L685.766,247.188z"/>
+            <path d="M578.418,825.641c59.961,0,108.743-48.783,108.743-108.744s-48.782-108.742-108.743-108.742H168.717       c-59.961,0-108.744,48.781-108.744,108.742s48.782,108.744,108.744,108.744c59.962,0,108.743-48.783,108.743-108.744       c0-14.4-2.821-28.152-7.927-40.742h208.069c-5.107,12.59-7.928,26.342-7.928,40.742       C469.675,776.858,518.457,825.641,578.418,825.641z M209.46,716.897c0,22.467-18.277,40.744-40.743,40.744       c-22.466,0-40.744-18.277-40.744-40.744c0-22.465,18.277-40.742,40.744-40.742C191.183,676.155,209.46,694.432,209.46,716.897z       M619.162,716.897c0,22.467-18.277,40.744-40.743,40.744s-40.743-18.277-40.743-40.744c0-22.465,18.277-40.742,40.743-40.742       S619.162,694.432,619.162,716.897z"/>
+          </g>
+        </svg>
+        <span class="cart-badge">{{ cartItems.length }}</span>
+      </button>
+
+      <!-- Cart Modal -->
+      <div class="cart-dropdown" *ngIf="showCartDropdown">
+        <div *ngFor="let item of cartItems; let i = index" class="cart-item">
+          <span>{{ item.name }} (x{{ item.quantity }})</span>
+          <span>${{ item.finalPrice * item.quantity }}</span>
+          <button (click)="removeCartItem(i)">✕</button>
+        </div>
+        <div class="cart-total">Total: ${{ cartTotal }}</div>
+        <a routerLink="/cart" class="view-cart-btn">View Cart</a>
+      </div>
+    </div>
+  </div>
+</nav>
