@@ -7,12 +7,12 @@ on:
       - production
 
 jobs:
-  deploy-development:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development'
-    steps:
-      - name: Stage Tests
-        run: echo "No Tests to Run, Exiting..."
+  # deploy-development:
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/development'
+  #   steps:
+  #     - name: Stage Tests
+  #       run: echo "No Tests to Run, Exiting..."
 
   deploy-production:
     runs-on: ubuntu-latest
