@@ -38,10 +38,15 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh ec2 '
-          cd /var/mean/elmwoodarmory/
-          && git pull origin production
-          && cd client/ && npm install
-          && ng build --configuration production
-          && cd ../server/ && npm install
-          && npx tsc && pm2 startOrRestart ecosystem.config.js'
+          ssh ec2 'bash -se' <<'EOSSH'
+          set -euxo pipefail
+          cd /var/mean/elmwoodarmory
+          git pull origin production
+          cd client
+          npm ci
+          npx ng build --configuration production
+          cd ../server
+          npm ci
+          npx tsc
+          pm2 startOrRestart ecosystem.config.js
+          EOSSH
