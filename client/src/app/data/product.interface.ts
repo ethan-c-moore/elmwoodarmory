@@ -65,7 +65,7 @@ export const products: ProductInterface[] = [
           },
           bifold: {
             name: "Bifold",
-            price: 70,
+            price: 65,
             description: "Our classic bifold wallets feature <strong style='text-decoration: underline; font-size: 1.6rem;'>8 card slots</strong>, <strong style='text-decoration: underline; font-size: 1.6rem;'>2 hidden card slots</strong>, and <strong style='text-decoration: underline; font-size: 1.6rem;'>1 full-length cash slot</strong>—perfect for everyday use with plenty of room for all your essentials.",
             images: [
               'bifold_wallet_front.jpg',
@@ -85,7 +85,7 @@ export const products: ProductInterface[] = [
           },
           tall: {
             name: "Tall",
-            price: 85,
+            price: 80,
             description: "For those who like to carry more, our tall wallets pack in <strong style='text-decoration: underline; font-size: 1.6rem;'>16 card slots</strong> and <strong style='text-decoration: underline; font-size: 1.6rem;'>2 full-length cash slots</strong>—all in a sleek, vertical design.",
             images: [
               'tall_wallet_front.jpg',
