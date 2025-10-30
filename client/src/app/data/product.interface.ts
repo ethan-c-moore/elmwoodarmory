@@ -192,6 +192,10 @@ export const products: ProductInterface[] = [
           yellow: {
             name: "Yellow",
             image: 'thread_yellow.jpg'
+          },
+          sand: {
+            name: "Sand",
+            image: 'thread_sand.jpg'
           }
         }
       }
