@@ -1,0 +1,217 @@
+/* =========================
+   Gallery: Layout & Styling
+   ========================= */
+
+/* ----- Layout shell ----- */
+.gallery_container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--quaternary-color);
+  min-height: 100vh;
+}
+
+/* Use grid so the filter can sit beside the gallery on wide screens */
+.gallery_content {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1rem;
+  align-items: start;
+  width: min(1200px, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* Collapse to single column on smaller screens */
+@media (max-width: 900px) {
+  .gallery_content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================
+   Filter (sidebar/bar)
+   ================== */
+
+/* Desktop/large: card-like sticky sidebar */
+.gallery_filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  /* Fallback then nicer mix */
+  background: var(--quaternary-color);
+  background: color-mix(in oklab, var(--quaternary-color) 85%, black 15%);
+  box-shadow: 0 1px 6px rgba(0,0,0,.08) inset;
+  position: sticky;
+  top: 0.5rem;
+  max-height: calc(100dvh - 1rem);
+  overflow: auto;
+}
+
+.gallery_filter h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+/* Shared chip look for labels and the Clear button */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--quaternary-color) 70%, black 10%);
+  border: 1px solid rgba(0,0,0,.08);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+}
+
+.chip input[type="checkbox"] {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+/* Clear button variant */
+.chip--clear {
+  background: transparent;
+  border: 1px dashed rgba(0,0,0,.25);
+}
+.chip--clear:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid rgba(0,0,0,.35);
+  outline-offset: 2px;
+}
+
+/* Mobile: turn the filter into a sticky horizontal bar */
+@media (max-width: 900px) {
+  .gallery_filter {
+    position: sticky;
+    top: env(safe-area-inset-top, 0);
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem clamp(0.5rem, 2vw, 1rem);
+    /* edge-to-edge background */
+    margin: 0 calc(-1 * clamp(0.5rem, 2vw, 1rem));
+    background: var(--quaternary-color);
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .gallery_filter > h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    flex: 0 0 auto;
+  }
+
+  /* Keep Clear chip visible first on mobile if present */
+  .chip--clear {
+    order: -1;
+  }
+}
+
+/* ============
+   Gallery grid
+   ============ */
+
+.gallery_images {
+  display: grid;
+  /* Base: responsive min tile between 160–280px */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(clamp(160px, 30vw, 280px), 1fr)
+  );
+  gap: 8px;
+  width: 100%;
+  margin-inline: auto;
+  padding: 1rem 0;
+
+  /* Enable container queries */
+  container-type: inline-size;
+  container-name: gallery;
+}
+
+/* Container queries: adapt to the space the grid actually has */
+@supports (container-type: inline-size) {
+  /* Very narrow columns (e.g., next to sidebar) */
+  @container gallery (max-width: 420px) {
+    .gallery_images {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+  }
+
+  /* Medium space */
+  @container gallery (min-width: 421px) and (max-width: 800px) {
+    .gallery_images {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    }
+  }
+
+  /* Roomy */
+  @container gallery (min-width: 801px) {
+    .gallery_images {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+}
+
+/* ============
+   Image tiles
+   ============ */
+
+.gallery_image-wrapper {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;           /* square default */
+  isolation: isolate;            /* ensure hover scale clips within tile */
+}
+
+/* Optional aspect hints */
+.gallery_image-wrapper.tall { aspect-ratio: 2 / 3; }
+.gallery_image-wrapper.wide { aspect-ratio: 3 / 2; }
+
+/* On small screens, normalize tiles for consistency */
+@media (max-width: 700px) {
+  .gallery_image-wrapper.tall,
+  .gallery_image-wrapper.wide {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Hover effect (only for devices that support hover) */
+@media (hover: hover) and (pointer: fine) {
+  .gallery_image-wrapper:hover .gallery_image {
+    transform: scale(1.06);
+  }
+}
+
+.gallery_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* fill tile neatly */
+  transition: transform 0.25s ease;
+  will-change: transform;
+  display: block;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .gallery_image { transition: none; }
+}
+
+/* Tiny screens: tighten gaps slightly */
+@media (max-width: 400px) {
+  .gallery_images { gap: 6px; }
+}

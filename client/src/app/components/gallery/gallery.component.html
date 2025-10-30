@@ -1,0 +1,44 @@
+<div class="gallery_container">
+  <app-header></app-header>
+
+  <div class="gallery_content">
+    <!-- Filter -->
+    <div class="gallery_filter">
+      <h2>Filter</h2>
+
+      <!-- New: Clear Filters chip (only when something is selected) -->
+      <button
+        *ngIf="hasSelections"
+        type="button"
+        class="chip chip--clear"
+        (click)="clearFilters()"
+        aria-label="Clear all selected filters"
+      >
+        Clear
+      </button>
+
+      <label *ngFor="let tag of uniqueTags" class="chip">
+        <input type="checkbox" #tagCheckbox [value]="tag" (change)="toggleTag(tag)" />
+        {{ tag | titlecase }}
+      </label>
+    </div>
+
+
+    <!-- Grid -->
+    <div class="gallery_images">
+      <div *ngFor="let image of filteredImages"
+           [ngClass]="['gallery_image-wrapper', image.customClass || '']">
+        <img
+          class="gallery_image"
+          [ngSrc]="'assets/img/gallery/' + image.src"
+          [alt]="image.src"
+          width="300" height="300"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,60 @@
+<div class="contact_container" id="contact">
+  <div class="contact_content">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+      <h2>Custom Products and Inquiry Form</h2>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>First Name</label>
+          <input type="text" formControlName="firstName" />
+        </div>
+
+        <div class="form-row">
+          <label>Last Name</label>
+          <input type="text" formControlName="lastName" />
+        </div>
+
+        <div class="form-row">
+          <label>Preferred Contact Method</label>
+          <div class="radio-group">
+            <label><input type="radio" value="email" formControlName="contactMethod" /> Email</label>
+            <label><input type="radio" value="phone" formControlName="contactMethod" /> Phone</label>
+          </div>
+          <label *ngIf="contactForm.get('contactMethod')?.value === 'email'">Email</label>
+          <label *ngIf="contactForm.get('contactMethod')?.value === 'phone'">Phone Number</label>
+          <input type="text" formControlName="contactValue" />
+        </div>
+
+        <div class="form-row">
+          <label>Contact Type</label>
+          <select formControlName="contactType">
+            <option value="">Select...</option>
+            <option value="commission">Commission</option>
+            <option value="repair">Repair</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label *ngIf="contactForm.get('contactType')?.value === 'commission' || contactForm.get('contactType')?.value === 'repair'">Piece Type</label>
+          <select formControlName="pieceType" *ngIf="contactForm.get('contactType')?.value === 'commission' || contactForm.get('contactType')?.value === 'repair'">
+            <option value="">Select...</option>
+            <option value="tack">Tack</option>
+            <option value="armor">Armor</option>
+            <option value="accessory">Accessory</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-row full-width">
+          <label>Message</label>
+          <textarea rows="5" formControlName="message"></textarea>
+        </div>
+
+        <div class="form-row full-width">
+          <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+        </div>
+      </div>
+      <div class="veteran_offer">
+        <p>Elmwood Armory is a proud supporter of our military. Let us know if you served or are serving to enjoy 15% off your custom order(s) upon verification.</p>
+      </div>
+    </form>
+  </div>
+</div>

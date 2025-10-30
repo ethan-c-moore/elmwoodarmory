@@ -1,0 +1,36 @@
+name: Deploy Workflow
+
+on:
+  push:
+    branches:
+      - development
+      - production
+
+jobs:
+  deploy-development:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/development'
+    steps:
+      - name: Stage Tests
+        run: echo "No Tests to Run, Exiting..."
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - name: Initialize Container
+        run: |
+          apt-get update -qq && apt-get install -y openssh-client
+          mkdir -p ~/.ssh
+          echo -e "${{ secrets.EC2_PEM }}" >> ~/.ssh/id_rsa
+          echo -e "Host ec2\n HostName ${{ env.EC2_HOST }}\n User ${{ env.EC2_USER }}\n IdentityFile ~/.ssh/id_rsa\n StrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: Deploy to EC2
+        run: |
+          ssh ec2 '
+          cd /var/mean/elmwoodarmory/
+          && git pull origin production
+          && cd client/ && npm install
+          && ng build --configuration production
+          && cd ../server/ && npm install
+          && npx tsc && pm2 startOrRestart ecosystem.config.js'

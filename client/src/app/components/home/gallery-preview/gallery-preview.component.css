@@ -1,0 +1,91 @@
+:host {
+  display: flex;
+  justify-content: center;
+  background-color: var(--secondary-color);
+}
+
+.gallery-preview {
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 80%;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.image-grid img {
+  width: 180px;
+  margin: auto;
+  height: auto;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+
+.gallery-button-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.view-gallery-button {
+  display: flex;
+  align-self: center;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  justify-content: center;
+  white-space: nowrap;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.gallery-button-bushing {
+  display: flex;
+  margin: 0 2rem;
+  width: 100%;
+  border-radius: 0.375rem;
+}
+.gallery-button-bushing.left {
+  background-image: linear-gradient(to right, transparent 40%, var(--primary-color));
+}
+.gallery-button-bushing.right {
+  background-image: linear-gradient(to right, var(--primary-color), transparent 60%);
+}
+
+@media (max-width: 1030px) {
+  .top-row > img:last-child {
+    display: none;
+  }
+  .bottom-row > img:first-child {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .top-row > img:first-child {
+    display: none;
+  }
+  .bottom-row > img:last-child {
+    display: none;
+  }
+  .view-gallery-button {
+    white-space: normal;
+  }
+}

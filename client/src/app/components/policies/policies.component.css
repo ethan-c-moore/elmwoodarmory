@@ -1,0 +1,33 @@
+.policies_container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--quaternary-color);
+}
+
+.policies_content {
+  flex-grow: 1;
+  width: 80%;
+  margin: 40px auto;
+  color: var(--primary-text);
+}
+
+h3, h4, h5, strong {
+  margin: 10px;
+}
+
+p {
+  margin: 15px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p, ul, li, strong {
+  font-size: 20px;
+}

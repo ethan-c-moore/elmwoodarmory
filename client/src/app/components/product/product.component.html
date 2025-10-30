@@ -1,0 +1,47 @@
+<div class="product_container">
+  <app-header></app-header>
+  <div class="product_content">
+    <div class="product_wrapper" *ngIf="importedProduct">
+      <h1 class="product-name">{{ importedProduct.name }}</h1>
+      <p class="description">{{ importedProduct.description }}</p>
+
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div *ngFor="let media of importedProduct.images" class="swiper-slide">
+            <img *ngIf="!media.endsWith('.mp4')" [src]="'/assets/img/shop/' + media" [alt]="importedProduct.name" class="product_img"/>
+            <video *ngIf="media.endsWith('.mp4')" [src]="'/assets/img/shop/' + media" class="product_video" controls></video>
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+
+      <div class="price">Price: ${{ finalPrice }}</div>
+
+      <div *ngFor="let groupKey of Object.keys(importedProduct.options)" class="option-group">
+        <h3 class="group-title">{{ importedProduct.options[groupKey].name }}</h3>
+        <div class="options">
+          <button *ngFor="let valueKey of Object.keys(importedProduct.options[groupKey].values)" [ngClass]="{ selected: selectedOptions[groupKey] === valueKey }" (click)="updateOption(groupKey, valueKey)">
+            <img *ngIf="importedProduct.options[groupKey].values[valueKey].image?.trim()" class="option-image" [ngSrc]="'assets/img/shop/' + importedProduct.options[groupKey].values[valueKey].image" alt="{{ importedProduct.options[groupKey].values[valueKey].name }}" width="75" height="75">
+            <span class="option-name">
+              {{ importedProduct.options[groupKey].values[valueKey].name }}
+              <ng-container *ngIf="selectedOptions[groupKey] !== valueKey">
+                {{ formatPriceDiff(groupKey,valueKey) }}
+              </ng-container>
+            </span>
+          </button>
+        </div>
+        <div *ngIf="selectedOptions[groupKey] && importedProduct.options[groupKey].values[selectedOptions[groupKey]].description">
+          <p class="option-description" [innerHTML]="getSafeDescription(importedProduct.options[groupKey].values[selectedOptions[groupKey]].description!)"></p>
+        </div>
+      </div>
+
+      <div class="button-holder">
+        <button class="add-to-cart" (click)="addCurrentProductToCart()">+ Add to Cart</button>
+        <button class="add-to-cart" (click)="customizeProduct()">Customize this Product</button>
+      </div>
+      <div class="item-added" *ngIf="itemAdded"><i>Item added!</i><br><a [routerLink]="['/cart']"><button>View Cart</button></a> <a href="/checkout"><button>Proceed to Checkout</button></a></div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

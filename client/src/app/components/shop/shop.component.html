@@ -1,0 +1,16 @@
+<div class="shop_container">
+  <app-header></app-header>
+  <div class="shop_content">
+    <div class="shop_grid">
+      <a *ngFor="let product of products" [routerLink]="['/product', product.path]" class="shop_item">
+        <img class="thumbnail" [ngSrc]="'/assets/img/shop/' + product.images[0]" width="300" height="300">
+        <h2>{{ product.name }}</h2>
+        <p>Starting at: ${{ product.startingAt }}</p>
+        <p>{{ product.description.length > 150 ? (product.description | slice:0:150) + '...' : product.description}}</p>
+        <div class="flex-spacer"></div>
+        <button>Customize</button>
+      </a>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

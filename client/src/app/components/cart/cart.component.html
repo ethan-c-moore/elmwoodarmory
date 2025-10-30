@@ -1,0 +1,40 @@
+<div class="cart_container">
+  <app-header></app-header>
+
+  <div class="cart_content">
+    <h2>Your Cart</h2>
+
+    <div *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="cart_item" *ngFor="let item of cartItems; let i = index">
+        <div class="item_info">
+          <div class="item_name">{{ productList[item.productId - 1].name }}</div>
+          <div class="item_options">
+            <span *ngFor="let opt of (item.selectedOptions | keyvalue)">
+              {{ productList[item.productId - 1].options[opt.key].name }}: {{ productList[item.productId - 1].options[opt.key].values[opt.value].name }}
+            </span>
+          </div>
+        </div>
+        <div class="item_price">
+          ${{ (item.finalPrice * item.quantity) | number: '1.2-2' }}
+        </div>
+        <button class="remove_btn" (click)="removeItem(i)">Remove</button>
+      </div>
+
+      <div class="cart_total">
+        <span>Total:</span>
+        <span class="total_amount">${{ totalPrice | number: '1.2-2' }}</span>
+      </div>
+
+      <div class="cart_buttons">
+        <button class="clear_btn" (click)="clearCart()">Clear Cart</button>
+        <a class="clear_btn" routerLink="/checkout" *ngIf="cartItems.length > 0">Checkout</a>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <p>Your cart is empty.</p>
+    </ng-template>
+  </div>
+
+  <app-footer></app-footer>
+</div>

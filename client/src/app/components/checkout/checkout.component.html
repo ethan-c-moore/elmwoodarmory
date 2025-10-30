@@ -1,0 +1,394 @@
+<div class="checkout_container">
+  <app-header></app-header>
+  <div class="checkout_content">
+    <!-- Left: customer info flow -->
+    <main class="checkout_main">
+
+      <!-- Stepper -->
+      <nav class="stepper" aria-label="Checkout Steps">
+        <button
+          class="step"
+          [class.active]="currentCheckoutStep === 1"
+          (click)="verifyCurrentAndChangeCheckoutStep(1)"
+          type="button">
+          <span class="step_index">1</span>
+          <span class="step_label">Shipping</span>
+        </button>
+        <button
+          class="step"
+          [class.active]="currentCheckoutStep === 2"
+          (click)="verifyCurrentAndChangeCheckoutStep(2)"
+          type="button">
+          <span class="step_index">2</span>
+          <span class="step_label">Billing</span>
+        </button>
+        <button
+          class="step"
+          [class.active]="currentCheckoutStep === 3"
+          (click)="verifyCurrentAndChangeCheckoutStep(3)"
+          type="button">
+          <span class="step_index">3</span>
+          <span class="step_label">Taxes</span>
+        </button>
+        <button
+          class="step"
+          [class.active]="currentCheckoutStep === 4"
+          (click)="verifyCurrentAndChangeCheckoutStep(4)"
+          type="button">
+          <span class="step_index">4</span>
+          <span class="step_label">Payment</span>
+        </button>
+      </nav>
+
+      <!-- SHIPPING -->
+      <section class="card" *ngIf="currentCheckoutStep === 1" [formGroup]="shippingForm">
+        <header class="card_header">
+          <h2>Shipping Address</h2>
+          <p class="muted"><i>We’ll only use this for shipping.</i></p>
+          <p class="muted"><strong>Please note we can only ship to US addresses.</strong></p>
+          <p class="muted">Customers that reside in ZIP codes 84074, 84029, and 84071 enjoy free shipping, as we can arrange hand-delivery.</p>
+          <br>
+          <h3 class="muted">If you have or are currently serving in the Armed Forces, please use the <a [routerLink]="['/home']" fragment="contact">commission form</a> instead to claim a complimentary veteran discount.</h3>
+        </header>
+
+        <div class="form_grid">
+          <div class="field">
+            <label for="shipping-first-name">First Name</label>
+            <input
+              id="shipping-first-name"
+              name="shipping-first-name"
+              type="text"
+              autocomplete="given-name"
+              placeholder="First name"
+              formControlName="firstName"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-last-name">Last Name</label>
+            <input
+              id="shipping-last-name"
+              name="shipping-last-name"
+              type="text"
+              autocomplete="family-name"
+              placeholder="Last name"
+              formControlName="lastName"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-phone">Phone (US phone numbers only)</label>
+            <input
+              id="shipping-phone"
+              name="shipping-phone"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              placeholder="(123) 456-7890"
+              maxLength="14"
+              formControlName="phoneNumber"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-email">Email</label>
+            <input
+              id="shipping-email"
+              name="shipping-email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              formControlName="email"
+            />
+          </div>
+
+          <div class="field field_full">
+            <label for="shipping-line1">Street Address 1</label>
+            <input
+              id="shipping-line1"
+              name="shipping-line1"
+              type="text"
+              autocomplete="address-line1"
+              placeholder="Address line 1"
+              formControlName="addressLine1"
+            />
+          </div>
+
+          <div class="field field_full">
+            <label for="shipping-line2">Street Address 2 <span class="muted">(optional)</span></label>
+            <input
+              id="shipping-line2"
+              name="shipping-line2"
+              type="text"
+              autocomplete="address-line2"
+              placeholder="Apartment, suite, etc."
+              formControlName="addressLine2"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-city">City</label>
+            <input
+              id="shipping-city"
+              name="shipping-city"
+              type="text"
+              autocomplete="address-level2"
+              placeholder="City"
+              formControlName="adminArea2"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-state">State</label>
+            <select
+              id="shipping-state"
+              name="shipping-state"
+              autocomplete="address-level1"
+              formControlName="adminArea1">
+                <option value="" disabled selected>Choose a state…</option>
+                <option *ngFor="let state of states" [value]="state.value">{{ state.name }}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="shipping-zip">ZIP</label>
+            <input
+              id="shipping-zip"
+              name="shipping-zip"
+              type="text"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              placeholder="ZIP code"
+              formControlName="postalCode"
+            />
+          </div>
+
+          <div class="field">
+            <label for="shipping-country">Country (We can only ship in the US right now)</label>
+            <input
+              id="shipping-country"
+              name="shipping-country"
+              type="text"
+              value="US"
+              readonly
+              formControlName="countryCode"
+            />
+          </div>
+        </div>
+
+        <footer class="card_footer">
+          <button class="btn secondary" type="button" (click)="currentCheckoutStep = 1" disabled>Back</button>
+          <button class="btn primary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(2)">Continue to Billing</button>
+        </footer>
+      </section>
+
+      <!-- BILLING -->
+      <section class="card" *ngIf="currentCheckoutStep === 2" [formGroup]="billingForm">
+        <header class="card_header">
+          <h2>Billing Address</h2>
+          <label class="checkbox-inline">
+            <input type="checkbox"
+            [checked]="sameAsShipping"
+            (change)="onToggleSameAsShipping($any($event.target).checked)"
+            >
+            Same as shipping
+          </label>
+        </header>
+
+        <div class="form_grid">
+          <div class="field">
+            <label for="billing-first-name">First Name</label>
+            <input
+              id="billing-first-name"
+              name="billing-first-name"
+              type="text"
+              autocomplete="given-name"
+              placeholder="First name"
+              formControlName="firstName"
+            />
+          </div>
+
+          <div class="field">
+            <label for="billing-last-name">Last Name</label>
+            <input
+              id="billing-last-name"
+              name="billing-last-name"
+              type="text"
+              autocomplete="family-name"
+              placeholder="Last name"
+              formControlName="lastName"
+            />
+          </div>
+
+          <div class="field field_full">
+            <label for="billing-line1">Street Address 1</label>
+            <input
+              id="billing-line1"
+              name="billing-line1"
+              type="text"
+              autocomplete="address-line1"
+              placeholder="Address line 1"
+              formControlName="addressLine1"
+            />
+          </div>
+
+          <div class="field field_full">
+            <label for="billing-line2">Street Address 2 <span class="muted">(optional)</span></label>
+            <input
+              id="billing-line2"
+              name="billing-line2"
+              type="text"
+              autocomplete="address-line2"
+              placeholder="Apartment, suite, etc."
+              formControlName="addressLine2"
+            />
+          </div>
+
+          <div class="field">
+            <label for="billing-city">City</label>
+            <input
+              id="billing-city"
+              name="billing-city"
+              type="text"
+              autocomplete="address-level2"
+              placeholder="City"
+              formControlName="adminArea2"
+            />
+          </div>
+
+          <div class="field">
+            <label for="billing-state">State</label>
+            <select
+              id="billing-state"
+              name="billing-state"
+              autocomplete="address-level1"
+              formControlName="adminArea1">
+                <option value="" disabled selected>Choose a state…</option>
+                <option *ngFor="let state of states" [value]="state.value">{{ state.name }}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="billing-zip">ZIP</label>
+            <input
+              id="billing-zip"
+              name="billing-zip"
+              type="text"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              placeholder="ZIP code"
+              formControlName="postalCode"
+            />
+          </div>
+
+          <div class="field">
+            <label for="billing-country">Country</label>
+            <input
+              id="billing-country"
+              name="billing-country"
+              type="text"
+              value="US"
+              readonly
+              formControlName="countryCode"
+            />
+          </div>
+        </div>
+
+        <footer class="card_footer">
+          <button class="btn secondary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(1)">Back</button>
+          <button class="btn primary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(3)">Continue to Taxes</button>
+        </footer>
+      </section>
+
+      <!-- TAXES -->
+      <section class="card" *ngIf="currentCheckoutStep === 3">
+        <header class="card_header">
+          <h2>Taxes</h2>
+          <p class="muted">This section is just to let you know we include any applicable taxes in your product's price. You can continue to the next section; we'll take care of this.</p>
+        </header>
+
+        <footer class="card_footer">
+          <button class="btn secondary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(2)">Back</button>
+          <button class="btn primary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(4)">Continue to Payment</button>
+        </footer>
+      </section>
+
+      <!-- PAYMENT -->
+      <section class="card" *ngIf="currentCheckoutStep === 4">
+        <header class="card_header">
+          <h2>Payment</h2>
+        </header>
+
+        <div class="payment_grid">
+          <div class="paypal_buttons">
+            <div id="paypal-button-container" class="paypal-button-container"></div>
+          </div>
+          <div class="payPalSeperator">OR</div>
+          <div class="card_hosted">
+            <div id="card-form" class="card_container">
+              <div id="card-name-field-container"></div>
+              <div id="card-number-field-container"></div>
+              <div id="card-expiry-field-container"></div>
+              <div id="card-cvv-field-container"></div>
+              <button id="card-field-submit-button" type="button" class="btn primary full">Pay now with Card</button>
+            </div>
+            <p id="result-message" class="muted"></p>
+          </div>
+        </div>
+
+        <footer class="card_footer">
+          <button class="btn secondary" type="button" (click)="verifyCurrentAndChangeCheckoutStep(3)">Back</button>
+        </footer>
+      </section>
+    </main>
+
+    <!-- Right: cart summary -->
+    <aside class="checkout_cart card">
+      <header class="card_header">
+        <h2>Cart Summary</h2>
+      </header>
+
+      <div class="checkout_cart_items">
+        <div class="checkout_cart_item" *ngFor="let item of cartItems">
+          <div class="checkout_cart_item_details">
+            <div class="checkout_cart_item_name">{{ item.name }}</div>
+            <div class="checkout_cart_item_price">{{ item.finalPrice | currency:'USD' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout_cart_spacer"></div>
+
+      <div class="cart_subtotal_row">
+        <div>Subtotal</div>
+        <div>{{ cartTotal | currency:'USD' }}</div>
+      </div>
+      <div class="cart_subtotal_row">
+        <div>Shipping</div>
+        <div>{{ ['84029', '84074', '84701'].includes(shippingForm.get('postalCode')?.getRawValue()) ?  'Free Shipping' : (cartItems.length * 11 | currency: 'USD')}}</div>
+      </div>
+      <div class="cart_total_row">
+        <div>Total</div>
+        <div>{{ (cartTotal) + (['84029', '84074', '84701'].includes(shippingForm.get('postalCode')?.getRawValue()) ? 0 : (cartItems.length * 11)) | currency: 'USD' }}</div>
+      </div>
+    </aside>
+
+    <!-- Modal -->
+    <div class="modal_backdrop" *ngIf="modalOpen">
+      <div class="modal_card" [class.error]="modalKind==='error'">
+        <h3>{{ modalTitle }}</h3>
+        <p [innerHTML]="modalBody"></p>
+        <div class="modal_actions">
+
+          <div class="goHome" *ngIf="modalKind==='success'">
+            <span>Or you can click this button in case you aren't automatically redirected.</span>
+            <button class="btn primary" (click)="goHome()">Home</button>
+          </div>
+
+          <button class="btn" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
