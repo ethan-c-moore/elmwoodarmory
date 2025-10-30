@@ -36,7 +36,7 @@ jobs:
         working-directory: client
         run: |
           cd dist
-          tar -czf ../client-dist.tar.gz .
+          tar -czf client-dist.tar.gz -C dist .
 
       # SERVER
 
@@ -60,7 +60,7 @@ jobs:
           cp -a node_modules bundle/node_modules
           cp package.json bundle/package.json
           if [ -f ecosystem.config.js ]; then cp ecosystem.config.js bundle/ecosystem.config.js; fi
-          tar -czf ../server-bundle.tar.gz -C bundle .
+          tar -czf server-bundle.tar.gz -C bundle .
 
       # ARTIFACTS
 
