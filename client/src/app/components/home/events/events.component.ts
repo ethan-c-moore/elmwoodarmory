@@ -21,34 +21,24 @@ interface EventItem {
 export class EventsComponent {
   @HostBinding('class.open') isOpen = false;
 
-  // Your data (unchanged)
   events: EventItem[] = [
+    // {
+    //   name: 'Utah Ren Faire',
+    //   description: 'Utah Valley Arts presents the 13th Annual Utah Renaissance Faire',
+    //   startDate: new Date('2025-08-21'),
+    //   endDate: new Date('2025-08-23'),
+    //   address: 'Mt. Nebo Botanical Farm 3700 Old Hwy 91, Mona, UT 84645',
+    //   img: 'assets/img/events/utf-logo.png',
+    //   link: 'https://utahrenfaire.utahvalleyarts.com/'
+    // },
     {
-      name: 'Utah Ren Faire',
-      description: 'Utah Valley Arts presents the 13th Annual Utah Renaissance Faire',
-      startDate: new Date('2025-08-21'),
-      endDate: new Date('2025-08-23'),
-      address: 'Mt. Nebo Botanical Farm 3700 Old Hwy 91, Mona, UT 84645',
-      img: 'assets/img/events/utf-logo.png',
-      link: 'https://utahrenfaire.utahvalleyarts.com/'
-    },
-    {
-      name: 'Tooele Ren Faire',
-      description: 'Hear ye, hear ye! We invite all good folk, young and old, to join us for our fifth annual Renaissance Faire at the Benson Grist Mill in Tooele County, UT. Come behold the sights of magical entertainment, delight in the sounds of live music, eat delicious foods, and shop from our market of truly unique merchants. Let us celebrate the start of the harvest season together with merriment!',
-      startDate: new Date('2025-09-19'),
-      endDate: new Date('2025-09-20'),
-      address: '325 Pole Canyon Road, Stansbury Park Utah, 84074',
-      img: 'assets/img/events/tooele-ren-faire.webp',
-      link: 'https://www.tooeleartsguild.com/renfaire'
-    },
-    {
-      name: 'Ely Ren Faire',
-      description: 'Eastern Nevada\'s most epically medieval event filled with renaissance revelry and feudal frivolity.',
-      startDate: new Date('2025-10-18'),
-      endDate: new Date('2025-10-18'),
-      address: 'Broadbent Park, Ely Nevada, 89301',
-      img: 'assets/img/events/ely-ren-faire.jpg',
-      link: 'https://www.facebook.com/elyrenfaire/'
+      name: 'Country Hearts Botique',
+      description: '',
+      startDate: new Date('2025-11-1'),
+      endDate: new Date('2025-11-1'),
+      address: 'Millard County Fair Building, 187 South Manzanita Ave., Delta, UT 84624',
+      img: '',
+      link: 'https://chboutique.com/'
     }
   ];
 
