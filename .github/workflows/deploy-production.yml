@@ -34,9 +34,7 @@ jobs:
 
       - name: Package dist
         working-directory: client
-        run: |
-          cd dist
-          tar -czf client-dist.tar.gz -C dist .
+        run: tar -czf client-dist.tar.gz -C dist .
 
       # SERVER
 
