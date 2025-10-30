@@ -10,6 +10,7 @@ jobs:
   # deploy-development:
   #   runs-on: ubuntu-latest
   #   if: github.ref == 'refs/heads/development'
+  #   environment: development
   #   steps:
   #     - name: Stage Tests
   #       run: echo "No Tests to Run, Exiting..."
@@ -17,6 +18,7 @@ jobs:
   deploy-production:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/production'
+    environment: production
     steps:
       - name: Intilize SSH
         uses: webfactory/ssh-agent@v0.9.0
