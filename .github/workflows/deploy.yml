@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/development'
     steps:
-      name: Stage Tests
-      run: echo "No Tests to Run, Exiting..."
+      - name: Stage Tests
+        run: echo "No Tests to Run, Exiting..."
 
   deploy-production:
     runs-on: ubuntu-latest
