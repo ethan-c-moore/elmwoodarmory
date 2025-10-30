@@ -18,13 +18,21 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/production'
     steps:
-      - name: Initialize Container
+      - name: Intilize SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_PEM }}
+
+      - name: Add EC2 to Known Hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ vars.EC2_HOST }} >> ~/.ssh/known_hosts
-          printf '%s\n' "${{ secrets.EC2_PEM }}" >> ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          printf "Host ec2\n HostName %s\n User %s\n IdentityFile ~/.ssh/id_rsa\n" "${{ vars.EC2_HOST }}" "${{ vars.EC2_USER }}" >> ~/.ssh/config
+
+      - name: Configure SSH 
+        run: printf "Host ec2\n HostName %s\n User %s\n" "${{ vars.EC2_HOST }}" "${{ vars.EC2_USER }}" >> ~/.ssh/config
+
+      - name: Sanity Check SSH configuration
+        run: ssh -v ec2 'echo "SSH OK?"'
 
       - name: Deploy to EC2
         run: |
