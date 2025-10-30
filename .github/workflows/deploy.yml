@@ -21,8 +21,9 @@ jobs:
       - name: Initialize Container
         run: |
           mkdir -p ~/.ssh
-          echo -e "${{ secrets.EC2_PEM }}" >> ~/.ssh/id_rsa
-          echo -e "Host ec2\n HostName ${{ env.EC2_HOST }}\n User ${{ env.EC2_USER }}\n IdentityFile ~/.ssh/id_rsa\n StrictHostKeyChecking no\n" >> ~/.ssh/config
+          ssh-keyscan -H ${{ vars.EC2_HOST }} >> ~/.ssh/known_hosts
+          printf '%s\n' "${{ secrets.EC2_PEM }}" >> ~/.ssh/id_rsa
+          printf "Host ec2\n HostName %s\n User %s\n IdentityFile ~/.ssh/id_rsa\n" "${{ vars.EC2_HOST }}" "${{ vars.EC2_USER }}" >> ~/.ssh/config
 
       - name: Deploy to EC2
         run: |
