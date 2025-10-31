@@ -34,6 +34,6 @@ export const events: EventItem[] = [
         endDate: new Date('2025-11-22'),
         address: '1200 Towne Center Blvd #2090 Provo, UT 84601',
         img: '',
-        link: 'https://www.spanishfork.org/parksrec/page/holiday-gift-fair'
+        link: 'https://www.wegeektogether.com/pages/frost-and-fable-renaissance-market'
     }
 ]
