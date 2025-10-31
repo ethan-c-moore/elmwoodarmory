@@ -1,15 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface EventItem {
-  name: string;
-  description: string;
-  startDate: Date;
-  endDate?: Date;
-  address: string;
-  img: string;
-  link: string;
-}
+import { EventItem, events } from '../../../data/event.interface';
 
 @Component({
   selector: 'app-events',
@@ -21,32 +12,11 @@ interface EventItem {
 export class EventsComponent {
   @HostBinding('class.open') isOpen = false;
 
-  events: EventItem[] = [
-    // {
-    //   name: 'Utah Ren Faire',
-    //   description: 'Utah Valley Arts presents the 13th Annual Utah Renaissance Faire',
-    //   startDate: new Date('2025-08-21'),
-    //   endDate: new Date('2025-08-23'),
-    //   address: 'Mt. Nebo Botanical Farm 3700 Old Hwy 91, Mona, UT 84645',
-    //   img: 'assets/img/events/utf-logo.png',
-    //   link: 'https://utahrenfaire.utahvalleyarts.com/'
-    // },
-    {
-      name: 'Country Hearts Botique',
-      description: '',
-      startDate: new Date('2025-11-1'),
-      endDate: new Date('2025-11-1'),
-      address: 'Millard County Fair Building, 187 South Manzanita Ave., Delta, UT 84624',
-      img: '',
-      link: 'https://chboutique.com/'
-    }
-  ];
-
   toggle() { this.isOpen = !this.isOpen; }
 
   get upcomingEvents(): EventItem[] {
     const today = new Date(); today.setHours(0,0,0,0);
-    return this.events
+    return events
       .filter(e => (e.endDate ?? e.startDate) >= today)
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
       .slice(0, 3);
