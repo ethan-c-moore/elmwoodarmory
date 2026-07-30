@@ -11,7 +11,11 @@ declare module "express-session" {
     }
 }
 
+
 dotenv.config();
+
+console.log(process.cwd());
+console.log(__dirname);
 
 import contactRoutes from "./contact.routes";
 import cartRoutes from "./cart.routes";
