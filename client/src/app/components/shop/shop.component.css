@@ -22,12 +22,14 @@
   position: absolute;
   width: 60%;
   max-width: 600px;
-  padding: 5rem;
+  padding: 2rem;
   background-color: var(--primary-color);
   border: 3px solid white;
   border-radius: 1rem;
   top: 250px;
   z-index: 1;
+  color: var(--primary-text);
+  font-style: italic;
 }
 
 .shop_grid {
