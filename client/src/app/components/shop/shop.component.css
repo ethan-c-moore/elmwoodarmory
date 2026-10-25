@@ -8,6 +8,27 @@
 .shop_content {
   display: flex;
   flex-grow: 1;
+  flex-direction: column;
+}
+
+.shop_notice_container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  height: 0px;
+}
+
+.shop_notice {
+  display: flex;
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+  padding: 5rem;
+  background-color: var(--primary-color);
+  border: 3px solid white;
+  border-radius: 1rem;
+  top: 350px;
+  height: 105.6px;
 }
 
 .shop_grid {
@@ -16,23 +37,6 @@
   gap: 2rem;
   padding: 2rem;
   margin: 25px auto;
-}
-
-.shop_notice_container {
-  display: flex;
-  position: relative;
-  justify-content: center;
-}
-
-.shop_notice {
-  display: flex;
-  position: relative;
-  width: 60%;
-  max-width: 600px;
-  padding: 2rem;
-  background-color: var(--secondary-color);
-  border: 3px solid white;
-  border-radius: 1rem;
 }
 
 .shop_item {
