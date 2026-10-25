@@ -19,6 +19,8 @@
 
 .shop_notice {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   position: absolute;
   width: 60%;
   max-width: 600px;
