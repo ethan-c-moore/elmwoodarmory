@@ -1,12 +1,12 @@
 <div class="shop_container">
   <app-header></app-header>
   <div class="shop_content">
-    <div class="shop_grid">
-      <div class="shop_notice_container">
-        <div class="shop_notice">
-          <p>We are currently not accepting orders. Please contact us directly for product assistance or inquiries.</p>
-        </div>
+    <div class="shop_notice_container">
+      <div class="shop_notice">
+        <p>We are currently not accepting orders. Please contact us directly for product assistance or inquiries.</p>
       </div>
+    </div>
+    <div class="shop_grid">
       <!-- [routerLink]="['/product', product.path]" -->
       <a *ngFor="let product of products" class="shop_item">
         <img class="thumbnail" [ngSrc]="'/assets/img/shop/' + product.images[0]" width="300" height="300">
