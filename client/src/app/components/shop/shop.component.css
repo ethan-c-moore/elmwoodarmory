@@ -30,6 +30,7 @@
   z-index: 1;
   color: var(--primary-text);
   font-style: italic;
+  font-size: 1.3rem;
 }
 
 .shop_grid {
