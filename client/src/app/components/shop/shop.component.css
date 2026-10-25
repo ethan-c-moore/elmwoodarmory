@@ -15,20 +15,19 @@
   display: flex;
   position: relative;
   justify-content: center;
-  height: 0px;
 }
 
 .shop_notice {
   display: flex;
-  position: relative;
+  position: absolute;
   width: 60%;
   max-width: 600px;
   padding: 5rem;
   background-color: var(--primary-color);
   border: 3px solid white;
   border-radius: 1rem;
-  top: 350px;
-  height: 105.6px;
+  top: 250px;
+  z-index: 1;
 }
 
 .shop_grid {
