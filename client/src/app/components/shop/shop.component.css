@@ -18,6 +18,23 @@
   margin: 25px auto;
 }
 
+.shop_notice_container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+
+.shop_notice {
+  display: flex;
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+  padding: 2rem;
+  background-color: var(--secondary-color);
+  border: 3px solid white;
+  border-radius: 1rem;
+}
+
 .shop_item {
   display: flex;
   flex-direction: column;

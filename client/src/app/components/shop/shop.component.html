@@ -2,7 +2,12 @@
   <app-header></app-header>
   <div class="shop_content">
     <div class="shop_grid">
-      <a *ngFor="let product of products" [routerLink]="['/product', product.path]" class="shop_item">
+      <div class="shop_notice_container">
+        <div class="shop_notice">
+          <p>We are currently not accepting orders. Please contact us directly for product assistance or inquiries.</p>
+        </div>
+      </div>
+      <a *ngFor="let product of products" /*[routerLink]="['/product', product.path]"*/ class="shop_item">
         <img class="thumbnail" [ngSrc]="'/assets/img/shop/' + product.images[0]" width="300" height="300">
         <h2>{{ product.name }}</h2>
         <p>Starting at: ${{ product.startingAt }}</p>
